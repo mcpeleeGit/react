@@ -1,46 +1,73 @@
-# Getting Started with Create React App
+# MCP App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+MCP(Minecraft Control Panel)는 마인크래프트 서버 관리를 위한 웹 기반 관리 시스템입니다.
 
-## Available Scripts
+## 주요 기능
 
-In the project directory, you can run:
+- 사용자 관리
+  - 사용자 등록/수정/삭제
+  - 권한 관리 (일반 사용자/관리자)
+  - 페이지네이션 지원
 
-### `npm start`
+- 블로그 관리
+  - 게시글 작성/수정/삭제
+  - 댓글 기능
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- 시스템 설정
+  - 서버 상태 모니터링
+  - 시스템 설정 관리
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 기술 스택
 
-### `npm test`
+- Frontend
+  - React
+  - TypeScript
+  - Material-UI
+  - React Router
+  - Axios
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 시작하기
 
-### `npm run build`
+### 필수 조건
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js 16.x 이상
+- npm 7.x 이상
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 설치
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# 프로젝트 클론
+git clone [repository-url]
 
-### `npm run eject`
+# 프로젝트 디렉토리로 이동
+cd mcp-app
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# 의존성 설치
+npm install
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 개발 서버 실행
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+npm start
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+브라우저에서 [http://localhost:3000](http://localhost:3000)으로 접속하여 애플리케이션을 확인할 수 있습니다.
 
-## Learn More
+### 빌드
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm run build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 환경 변수 설정
+
+프로젝트 루트 디렉토리에 `.env` 파일을 생성하고 다음 변수들을 설정하세요:
+
+```
+REACT_APP_API_URL=http://localhost:8000
+```
+
+## 라이선스
+
+이 프로젝트는 MIT 라이선스를 따릅니다.
