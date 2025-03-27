@@ -10,8 +10,15 @@ import {
   AppBar,
   Toolbar,
   Button,
+  CardActionArea,
 } from '@mui/material';
 import { useAuth } from '../contexts/AuthContext';
+import {
+  People as PeopleIcon,
+  Article as ArticleIcon,
+  Settings as SettingsIcon,
+  Assessment as AssessmentIcon,
+} from '@mui/icons-material';
 
 const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -21,6 +28,33 @@ const AdminDashboard: React.FC = () => {
     logout();
     navigate('/login');
   };
+
+  const menuItems = [
+    {
+      title: '사용자 관리',
+      description: '사용자 등록, 수정, 삭제 및 권한 관리',
+      icon: <PeopleIcon sx={{ fontSize: 40 }} />,
+      path: '/admin/users',
+    },
+    {
+      title: '블로그 관리',
+      description: '게시글 및 댓글 관리',
+      icon: <ArticleIcon sx={{ fontSize: 40 }} />,
+      path: '/admin/blog',
+    },
+    {
+      title: '시스템 설정',
+      description: '서버 설정 및 환경 구성',
+      icon: <SettingsIcon sx={{ fontSize: 40 }} />,
+      path: '/admin/settings',
+    },
+    {
+      title: '통계',
+      description: '시스템 사용 통계 및 모니터링',
+      icon: <AssessmentIcon sx={{ fontSize: 40 }} />,
+      path: '/admin/stats',
+    },
+  ];
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -40,71 +74,50 @@ const AdminDashboard: React.FC = () => {
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           관리자 대시보드
         </Typography>
-        
-        <Grid container spacing={3} sx={{ mt: 2 }}>
-          <Grid item xs={12} md={6}>
-            <Card 
-              sx={{ 
-                cursor: 'pointer',
-                '&:hover': {
-                  boxShadow: 6,
-                }
-              }}
-              onClick={() => navigate('/admin/users')}
-            >
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  사용자 관리
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  사용자 목록 조회, 권한 관리, 계정 활성화/비활성화
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          
-          <Grid item xs={12} md={6}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  블로그 관리
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  게시글 관리, 댓글 관리, 카테고리 관리
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          
-          <Grid item xs={12} md={6}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  시스템 설정
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  시스템 환경 설정, 로그 확인, 백업 관리
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          
-          <Grid item xs={12} md={6}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  통계
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  사용자 통계, 게시글 통계, 방문자 통계
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+        <Grid container spacing={3}>
+          {menuItems.map((item) => (
+            <Grid item xs={12} sm={6} md={3} key={item.title}>
+              <Card 
+                sx={{ 
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: 6,
+                  },
+                }}
+              >
+                <CardActionArea 
+                  onClick={() => navigate(item.path)}
+                  sx={{ 
+                    flexGrow: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    p: 2,
+                  }}
+                >
+                  <Box sx={{ color: 'primary.main', mb: 2 }}>
+                    {item.icon}
+                  </Box>
+                  <CardContent sx={{ textAlign: 'center' }}>
+                    <Typography gutterBottom variant="h6" component="h2">
+                      {item.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {item.description}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </Box>

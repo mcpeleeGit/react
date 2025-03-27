@@ -1,4 +1,4 @@
-export interface Author {
+export interface BlogAuthor {
   id: number;
   name: string;
 }
@@ -8,16 +8,23 @@ export interface BlogPost {
   title: string;
   content: string;
   created_at: string;
-  author: Author;
+  author: BlogAuthor;
 }
 
 export interface BlogListResponse {
   posts: BlogPost[];
+  total: number;
+  page: number;
+  limit: number;
 }
 
-export interface BlogApiResponse {
-  status: 'success' | 'error';
-  message: string;
-  data?: BlogListResponse;
-  error_code?: string;
+export interface BlogCreateRequest {
+  title: string;
+  content: string;
+}
+
+export interface BlogUpdateRequest {
+  id: number;
+  title: string;
+  content: string;
 } 

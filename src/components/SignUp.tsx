@@ -13,9 +13,11 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 import { cryptoUtils } from '../utils/crypto';
+import { useAuth } from '../contexts/AuthContext';
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -67,10 +69,17 @@ const SignUp = () => {
           });
 
           if (loginResponse.status === 'success' && loginResponse.data) {
-            // 토큰과 사용자 정보 저장
-            localStorage.setItem('token', loginResponse.data.token);
-            localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
-            navigate('/dashboard');
+            const userData = loginResponse.data.user;
+            const token = loginResponse.data.token;
+            console.log('Logging in user:', userData);
+            login({
+              id: userData.id,
+              email: userData.email,
+              name: userData.name,
+              role: (userData.user_type.toUpperCase() === 'ADMIN' ? 'admin' : 'user') as 'user' | 'admin'
+            });
+            localStorage.setItem('token', token);
+            navigate('/');
           } else {
             setError('로그인에 실패했습니다. 다시 로그인해주세요.');
           }

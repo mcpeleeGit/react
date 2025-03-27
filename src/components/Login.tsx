@@ -15,6 +15,7 @@ import { authService } from '../services/authService';
 import { cryptoUtils } from '../utils/crypto';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { UserData, AuthResponse } from '../types/auth';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -41,20 +42,22 @@ const Login = () => {
 
     try {
       setLoading(true);
-      const response = await authService.login({
+      const hashedPassword = cryptoUtils.hashPassword(formData.password);
+      const response: AuthResponse = await authService.login({
         email: formData.email,
-        password: formData.password,
+        password: hashedPassword,
       });
 
       if (response.status === 'success' && response.data) {
-        // user_type이 없는 경우 기본값 설정
-        const userData = {
-          id: response.data.user.id,
-          email: response.data.user.email,
-          name: response.data.user.name,
-          role: (response.data.user.user_type.toUpperCase() === 'ADMIN' ? 'admin' : 'user') as 'user' | 'admin'
-        };
-        login(userData);
+        const userData: UserData = response.data.user;
+        const token = response.data.token;
+        login({
+          id: userData.id,
+          email: userData.email,
+          name: userData.name,
+          role: (userData.user_type.toUpperCase() === 'ADMIN' ? 'admin' : 'user') as 'user' | 'admin'
+        });
+        localStorage.setItem('token', token);
         navigate('/');
       } else {
         setError(response.message || '로그인에 실패했습니다.');
